@@ -22,8 +22,14 @@ struct zc_client {
 static void s_handle_connection_status(zc_client_t *self, int connection_status) {
   if (connection_status) {
     printf("CONNECTED!!!!\n");
+    printf("send some data here\n\n");
+    char buf[100];
+    strcpy(buf, "Welcome!");
+    int buf_len = strlen(buf) + 1;
+    zc_writer__write(self->writer_, buf, buf_len);
   } else {
     printf("NOT CONNECTED!!!!\n");
+    printf("do nothing\n\n");
   }
 }
 
@@ -36,10 +42,12 @@ static void s_connect_cb(void *self_handle, int connection_status) {
 static void s_client_initialize(zc_client_t *self) {
   self->state_ = zc_client_state__initialized;
   self->connector_ = zc_connector_new("");
+  self->writer_ = zc_writer_new("", self->connector_);
 }
 extern zc_client_t *zc_client_new(const char *name) {
   zc_client_t *obj = (zc_client_t *)ZC_MALLOC(sizeof(zc_client_t));
   if (obj) {
+    memset(obj, 0, sizeof(zc_client_t));
     s_client_initialize(obj);
   }
   return obj;

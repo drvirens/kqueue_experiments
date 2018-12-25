@@ -21,6 +21,7 @@ extern "C" {
   
   extern zc_connector_t *zc_connector_new(const char *name);
   extern void zc_connector__connect(zc_connector_t *self, zc_connector_completion_cb completion, void *user_data);
+  extern void zc_connector__write(zc_connector_t *self, const char *buf, const int buf_len);
   extern void zc_connector_delete(zc_connector_t **self);
   
   

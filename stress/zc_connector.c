@@ -83,6 +83,7 @@ static int s_connect(zc_connector_t *self) {
 extern zc_connector_t *zc_connector_new(const char *name) {
   zc_connector_t *obj = (zc_connector_t *)ZC_MALLOC(sizeof(zc_connector_t));
   if (obj) {
+    memset(obj, 0, sizeof(zc_connector_t));
     obj->connect_status_ = 0;
   }
   return obj;
@@ -95,6 +96,30 @@ extern void zc_connector__connect(zc_connector_t *self, zc_connector_completion_
     if (self->completion_) {
       (*(self->completion_))(self->user_data_, self->connect_status_);
     }
+  }
+}
+extern void zc_connector__write(zc_connector_t *self, const char *buf, const int buf_len) {
+  printf("TODO: write\n");
+  if ( !((self->connect_status_ == 1) && (self->remote_fd > 0)) ) {
+    return;
+  }
+  printf("will write\n");
+  int wrote = write(self->remote_fd, buf, buf_len);
+  if (-1 == wrote) {
+    printf("ERROR while sending: {%s} \n", strerror(errno));
+    printf("errno\n");
+    printf("  {%d}\n\n", wrote);
+    printf("------\n");
+    
+    
+    printf("------CLOSED connection due to write error and exit follow\n");
+    close(self->remote_fd);
+    exit(EXIT_FAILURE);
+  }
+  if (wrote) {
+    printf("SENT\n");
+    printf("  {%d}\n\n", wrote);
+    printf("------\n");
   }
 }
 extern void zc_connector_delete(zc_connector_t **self) {

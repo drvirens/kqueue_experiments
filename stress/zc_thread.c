@@ -34,6 +34,7 @@ static void s_thread_initialize(zc_thread_t *self) {
 extern zc_thread_t *zc_thread_new(const char *name) {
   zc_thread_t *obj = (zc_thread_t *)ZC_MALLOC(sizeof(zc_thread_t));
   if (obj) {
+    memset(obj, 0, sizeof(zc_thread_t));
     s_thread_initialize(obj);
   }
   return obj;
