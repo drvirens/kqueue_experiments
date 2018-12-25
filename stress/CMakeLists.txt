@@ -29,7 +29,9 @@ target_sources(clientkqcs
                       "zc_connector.h"
                       "zc_reader.h"
                       "zc_writer.h"
-                      "zc_thread.h")
+                      "zc_thread.h"
+                      "zc_bench_constants.h"
+)
 target_include_directories(clientkqcs PUBLIC ${LIBEV_INCLUDE_DIR})
 target_link_libraries(clientkqcs PUBLIC ${LIBEV_LIBRARY})
 

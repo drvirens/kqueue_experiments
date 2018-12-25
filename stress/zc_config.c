@@ -9,7 +9,7 @@ struct zc_config {
 };
 
 extern zc_config_t *zc_config_new(const char *url) {
-  zc_config_t *obj = (zc_config_t *)malloc(sizeof(zc_config_t));
+  zc_config_t *obj = (zc_config_t *)ZC_MALLOC(sizeof(zc_config_t));
   if (obj) {
     memset(obj, 0, sizeof(zc_config_t));
     obj->fp_ = fopen(url, "r");
@@ -24,7 +24,7 @@ extern void zc_config_delete(zc_config_t **self) {
     if ((*self)->fp_) {
       fclose((*self)->fp_);
     }
-    free(*self);
+    ZC_FREE(*self);
     *self = NULL;
   }
 }

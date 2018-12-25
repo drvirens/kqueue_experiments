@@ -7,10 +7,11 @@
 
 #include "zc_writer.h"
 #include "zc_malloc.h"
+#include "zc_bench_constants.h"
 
 
 struct zc_writer {
-  char line[300];
+  char line[ZC_MAX_BUF_LEN];
   int line_len;
   zc_connector_t *connector_;
 };

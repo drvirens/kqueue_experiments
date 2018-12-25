@@ -5,6 +5,8 @@
 //  Created by Virendra Shakya on 12/23/18.
 //  Copyright © 2018 Virendra Shakya. All rights reserved.
 //
+
+#include <signal.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -54,9 +56,9 @@ static void s_loop(int kq, int wfd) {
         }
       }
       else if (kernel_event->ident == wfd) {
-        printf("ACCEPT\n");
+        //printf("ACCEPT\n");
         int accepted_fd = accept(wfd, (struct sockaddr *)&addr, &sock_len);
-        printf("ACCEPT: returnedFD : {%d}\n", accepted_fd);
+        printf("ACCEPT: fd : {%d}\n", accepted_fd);
         if (accepted_fd == -1) {
           printf("ERROR: kevent ret: {%d}, errmsg: %s\n", nevents, strerror(errno));
           return;
@@ -82,22 +84,9 @@ static void s_loop(int kq, int wfd) {
         }
         
         
-//        int wrote = write(accepted_fd, "welcome!", sizeof("welcome!"));
-//        if (-1 == wrote) {
-//          printf("ERROR while sending: {%s} \n", strerror(errno));
-//          printf("errno\n");
-//          printf("  {%d}\n\n", wrote);
-//          printf("------\n");
-//          return;
-//        }
-//        if (wrote) {
-//          printf("SENT\n");
-//          printf("  {%d}\n\n", wrote);
-//          printf("------\n");
-//        }
       }
       else { //if (ev_list[i].flags == EVFILT_READ) {
-        printf("READ\n");
+        //printf("READ\n");
         ssize_t r_bytes;
         ssize_t w_bytes;
         char r_buf[1024];
@@ -106,25 +95,24 @@ static void s_loop(int kq, int wfd) {
         r_bytes = read(client_fd, &r_buf, buf_len);
         
         
-        printf("RCVD\n");
-        printf("  {%d}\n", r_bytes);
+        printf("RCVD\t");
+        printf("  {%d}\t", r_bytes);
         if (r_bytes > 0 && r_bytes < buf_len) {
           r_buf[r_bytes] = '\0';
-          printf("  %s\n", r_buf);
+          printf("%s", r_buf); //this has \n in it so dont add it
           
           int wrote = write(client_fd, r_buf, r_bytes);
           if (-1 == wrote) {
             printf("ERROR while sending: {%s} \n", strerror(errno));
-            printf("errno\n");
-            printf("  {%d}\n", wrote);
+            printf("errno\t");
+            printf("  {%d}\t", wrote);
             printf("------\n");
             return;
           }
           if (wrote) {
-            printf("SENT\n");
-            printf("  {%d}\n", wrote);
-            printf("  %s\n", r_buf);
-            printf("------\n");
+            printf("SENT\t");
+            printf("  {%d}\t", wrote);
+            printf("%s", r_buf);//this has \n in it so dont add it
           }
         }
         
@@ -184,14 +172,17 @@ static void s_run_1() {
 static char un_path[1000];
 int main(int argc, const char * argv[]) {
   {
-  const char *p = "/Users/virendra.shakya/ROMPEr/spike/kqueue-client-server/stress/zircon.config";
-//  const char *p = "zircon.config";
+//  const char *p = "/Users/virendra.shakya/ROMPEr/spike/kqueue-client-server/stress/zircon.config";
+  const char *p = "/tmp/zircon.config";
   zc_config_t *config = zc_config_new(p);
   zc_config__str_value(config, NULL, un_path, 1000);
   socket_path = &un_path[0];
   zc_config_delete(&config);
   }
   
+  signal(SIGHUP, SIG_IGN);
+  signal(SIGPIPE, SIG_IGN);
+
   s_run_1();
   printf("Hello, World!\n");
   return 0;
