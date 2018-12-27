@@ -1,0 +1,14 @@
+Date: Tue, 10 Aug 2010 07:22:15 -0700 (PDT)
+From: Tony X <testuser@test.com>
+To: testuser@test.com
+Subject: AddToCalendar_icsLink_01
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+testing with ics in message body...
+
+http://zqa-tms.eng.vmware.com/files/Service/Cal/sample1.ics
+
+Tony Publiski
+Zimbra Support

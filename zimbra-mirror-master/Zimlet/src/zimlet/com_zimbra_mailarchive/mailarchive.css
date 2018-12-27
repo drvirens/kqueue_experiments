@@ -1,0 +1,11 @@
+.ImgarchiveZimletIcon {
+  background: url("archiveZimletIcon.png") no-repeat 0 0;
+  width: 16px;
+  height: 16px;
+  overflow: hidden;
+}
+
+.mailArchivePrefDialog {
+    width: 300px;
+    overflow: hidden;
+}

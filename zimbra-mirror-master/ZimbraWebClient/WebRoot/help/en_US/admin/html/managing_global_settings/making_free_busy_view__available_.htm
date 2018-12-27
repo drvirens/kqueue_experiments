@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0014)about:internet -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <meta name="generator" content="Adobe RoboHelp 9" />
+<title>Making Free/Busy View Available</title>
+<link rel="StyleSheet" href="../default.css" type="text/css" />
+<script type="text/javascript" language="JavaScript">
+//<![CDATA[
+function reDo() {
+  if (innerWidth != origWidth || innerHeight != origHeight)
+     location.reload();
+}
+if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+	origWidth = innerWidth;
+	origHeight = innerHeight;
+	onresize = reDo;
+}
+onerror = null; 
+//]]>
+</script>
+<style type="text/css">
+<!--
+div.WebHelpPopupMenu { position:absolute;
+left:0px;
+top:0px;
+z-index:4;
+visibility:hidden; }
+-->
+</style>
+<script type="text/javascript" language="javascript1.2" src="../whmsg.js"></script>
+<script type="text/javascript" language="javascript" src="../whver.js"></script>
+<script type="text/javascript" language="javascript1.2" src="../whproxy.js"></script>
+<script type="text/javascript" language="javascript1.2" src="../whutils.js"></script>
+<script type="text/javascript" language="javascript1.2" src="../whlang.js"></script>
+<script type="text/javascript" language="javascript1.2" src="../whtopic.js"></script>
+
+</head>
+
+<body><script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.gbWhTopic)
+{
+	var strUrl = document.location.href;
+	var bc = 0;
+	var n = strUrl.toLowerCase().indexOf("bc-");
+	if(n != -1)
+	{
+		document.location.href = strUrl.substring(0, n);
+		bc = strUrl.substring(n+3);
+	}
+
+	if (window.addTocInfo)
+	{
+	addTocInfo("Global Settings\nMaking Free/Busy Available");
+addButton("show",BTN_TEXT,"Show TOC","","","","",0,0,"","","");
+
+	}
+	if (window.writeBtnStyle)
+		writeBtnStyle();
+
+	if (window.writeIntopicBar)
+		writeIntopicBar(1);
+
+	
+	
+
+	if (window.setRelStartPage)
+	{
+	setRelStartPage("../administration_console_help.htm");
+
+		autoSync(1);
+		sendSyncInfo();
+		sendAveInfoOut();
+	}
+}
+else
+	if (window.gbIE4)
+		document.location.reload();
+
+//-->
+//]]></script>
+
+<h1>Making Free/Busy Schedule Available</h1>
+<p>The Free/Busy feature allows users to view each other’s calendars for 
+ efficiently scheduling meetings. You can set up free/busy scheduling across 
+ ZCS and Microsoft Exchange servers. </p>
+<p>ZCS can query 
+ the free/busy schedules of users on Microsoft Exchange 2003/2007/2010 
+ servers and also can propagate the free/busy schedules of Zimbra users to the Exchange 
+ server. </p>
+<p>To set free/busy interoperability, the Exchange systems must be set 
+ up as correctly. See the ZCS administration guide, Managing ZCS Configuration 
+ chapter for Exchange setup requirements. </p>
+<p>In addition, the global config, Domain, COS and Account settings must 
+ be configured.</p>
+<p style="font-weight: bold;">Procedure</p>
+<ol type="1">
+	<li><p>As a global configuration, go to <span class="attribute">Configure&gt;Global 
+	 Settings</span> or for a domain configuration go to <span class="attribute">Configure&gt;Domains</span>, 
+	 select the domain and in the gear icon, click <span class="attribute">Edit</span>. 
+	 </p></li>
+	<li><p>Click <span class="attribute">Free/Busy Interop</span><span 
+	 style="font-weight: bold;"><b> </b></span>in the Navigation pane.</p></li>
+	<li><p>In the <span class="attribute">Microsoft Exchange Server URL</span> 
+	 text box type the Web interface URL to Exchange.</p></li>
+	<li><p>In the <span class="attribute">Microsoft Exchange Authorization 
+	 Scheme</span> menu select either <span class="attribute">Basic</span> 
+	 or <span class="attribute">Form</span>.</p></li>
+</ol>
+<ul type="circle">
+	<ul type="circle">
+		<li class="p" type="disc"><p>Basic is authentication to Exchange 
+		 via HTTP basic authentication.</p></li>
+		<li class="p" type="disc"><p>Form is authentication to Exchange 
+		 as HTML form based authentication.</p></li>
+	</ul>
+</ul>
+<ol start="5" type="1">
+	<li><p>In the <span class="attribute">Microsoft Exchange Server Type</span> 
+	 menu select either <span class="attribute">WebDAV</span> 
+	 or <span class="attribute">ews</span>.</p></li>
+</ol>
+<ul type="circle">
+	<ul type="circle">
+		<li type="disc"><p>Select WebDAV to 
+		 support free/busy with Exchange 2003 or Exchange 2007.</p></li>
+		<li type="disc"><p>Select ews (Exchange 
+		 Web Service) to support free/busy with Exchange 2010, SP1.</p></li>
+	</ul>
+</ul>
+<ol start="6" type="1">
+	<li><p>In the<span style="font-weight: bold;"><b> </b></span><span class="attribute">Microsoft 
+	 Exchange User Name</span> and <span class="attribute">User Password</span>. 
+	 text boxes, type the name of the account in Active Directory and password 
+	 that has access to the public folders.</p></li>
+	<li><p>In the &#160;<span class="attribute">O and OU used in legacyExchangeDN 
+	 attribute text box</span> enter the O and OU values that are in the 
+	 legacyExchangeDN attribute for Exchange. These values correspond to 
+	 the domain attribute <span 
+	 class="attribute">zimbraFreebusyExchangeUserOrg</span>. When set at 
+	 the global level, this applies to all accounts talking to Exchange.</p></li>
+</ol>
+<p style="margin-left: 40px;">To find these values on the Exchange server, 
+ you can run the Exchange ADSI Edit tool and 
+ search the legacyExchangeDN attribute for o= , ou= , and cn= values.</p>
+<ol start="8" type="1">
+	<li><p>To check that your settings are correct before you save the 
+	 configuration, click <span class="attribute">Check the settings</span>. 
+	 </p></li>
+	<li><p>If the configuration is correct, click <span class="attribute">Save</span>. 
+	 &#160;If the configuration is incorrect, click <span class="attribute">Clear 
+	 the Settings</span> to clear all the fields and configure the settings 
+	 again.</p></li>
+</ol>
+<h2>Setting Up legacyExchangeDN attribute by COS</h2>
+<ol type="1">
+	<li><p>Go to<span class="attribute"> Configure &gt; Class of Service</span> 
+	 and select the COS to set up the free/busy legacy Exchange DN attribute.</p></li>
+	<li><p>Select the <span class="attribute">Advanced</span> page, and 
+	 in the <span class="attribute">Free/Busy Interop</span><span style="font-weight: bold;"><b> 
+	 </b></span>section</p></li>
+	<li><p>In the &#160;<span class="attribute">O and OU used in legacyExchangeDN 
+	 attribute text box</span> enter the <span class="attribute">O</span> 
+	 and <span class="attribute">OU</span> used 
+	 in the &#160;legacyExchangeDN 
+	 attribute (i.e. legacyExchangeDN 
+	 : / o=First Organization/ ou=First Administrative Group) </p></li>
+	<li><p>Click <span class="attribute">Save</span>. </p></li>
+</ol>
+<h2>Set up Individual Account's Address</h2>
+<ol type="1">
+	<li><p>Go to <span class="attribute">Manage &gt; Accounts</span> and 
+	 select the account to edit.</p></li>
+	<li><p>Select the <span class="attribute">Free/Busy Interop</span> 
+	 page.</p></li>
+	<li><p>Click <span class="attribute">Add</span>.</p></li>
+	<li><p>In the <span class="attribute">Free/Busy Interop Provider</span> 
+	 drop-down menu, select the interop provider.</p></li>
+	<li><p>In the <span class="attribute">Foreign Principal Email address</span> 
+	 text box enter the account's user's address.</p></li>
+	<li><p>Click <span class="attribute">OK</span>. The dialog box closes 
+	 and the name is added to the Foreign Principals content pane.</p></li>
+	<li><p>Select the address and click <span class="attribute">Push</span>. 
+	 &#160;This schedules the free/busy information to be pushed to the 
+	 provider and makes the account's free busy status available.</p></li>
+</ol>
+<p>In the individual Accounts&gt;Advanced page you can change the O and 
+ OU used for a specific account. &#160;Usually this COS setting is correct.</p>
+<p>&#160;</p>
+<script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.writeIntopicBar)
+	writeIntopicBar(0);
+
+
+highlightSearch();
+//-->
+//]]></script>
+</body>
+</html>

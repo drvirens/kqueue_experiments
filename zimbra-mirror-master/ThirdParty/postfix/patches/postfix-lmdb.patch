@@ -1,0 +1,11 @@
+--- postfix-2.11-20131101/src/util/slmdb.c.orig	2013-11-01 15:28:09.423104910 -0700
++++ postfix-2.11-20131101/src/util/slmdb.c	2013-11-01 15:28:22.251104482 -0700
+@@ -257,7 +257,7 @@
+ 
+ static int slmdb_prepare(SLMDB *slmdb)
+ {
+-    int     status;
++    int     status = 0;
+ 
+     /*
+      * This is called before accessing the database, or after recovery from

@@ -1,0 +1,113 @@
+<project name="Jetty-Ant-Plugin" default="jetty.run">
+<!--
+ * ***** BEGIN LICENSE BLOCK *****
+ * Zimbra Collaboration Suite Server
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013 Zimbra Software, LLC.
+ * 
+ * The contents of this file are subject to the Zimbra Public License
+ * Version 1.4 ("License"); you may not use this file except in
+ * compliance with the License.  You may obtain a copy of the License at
+ * http://www.zimbra.com/license.
+ * 
+ * Software distributed under the License is distributed on an "AS IS"
+ * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied.
+ * ***** END LICENSE BLOCK *****
+-->
+
+  <property name="jetty_webapps" location="build/jetty/webapps" />
+  <property name="config.dir" location="conf" />
+  <property name="common.jars.dir" location="../ZimbraCommon/jars" />
+  <property name="service.dir" location="${jetty_webapps}/service" />
+  <property name="lib.dir" location="${service.dir}/WEB-INF/lib" />
+  <property name="war.exclude" value="ical4j*.jar,servlet-api.jar,jsp-api.jar,zimbra-native.jar,javamail-1.4.5.jar,ldap.jar,jetty-*.jar" />
+
+  <target name="jetty.webinf">
+    <mkdir dir="${jetty_webapps}" />
+
+    <war warfile="${jetty_webapps}/service.war" webxml="${config.dir}/web.xml">
+      <fileset dir="WebRoot" />
+    </war>
+    <mkdir dir="${service.dir}" />
+    <unzip dest="${service.dir}" src="${jetty_webapps}/service.war" />
+    <delete file="${jetty_webapps}/service.war" />
+<!--    <mkdir dir="${lib.dir}" />
+    <copy todir="${lib.dir}" preservelastmodified="true">
+      <fileset dir="${common.jars.dir}" includes="*.jar" excludes="${war.exclude}" />
+    </copy> -->
+ </target>
+
+  <property name="project.outputDirectory" value="build" />
+  <property name="jetty.version" value="9.1.3.v20140225" />
+  <property name="jetty_run_base" location="/opt/zimbra" />
+
+  <path id="jetty.plugin.classpath">
+    <fileset dir="/opt/zimbra/jetty/lib">
+      <include name="**/*.jar" />
+      <exclude name="**/javax.mail*"/>
+      <exclude name="**/javax.activation*"/>
+      <include name="ext/*.jar" />
+      <include name="plus/*.jar" />
+      <include name="naming/*.jar" />
+      <include name="jsp/*.jar" />
+      <include name="annotations/*.jar" />
+    </fileset>
+    <fileset dir="jars">
+      <include name="jetty-ant-${jetty.version}.jar" />
+    </fileset>
+  </path>
+
+  <taskdef classpathref="jetty.plugin.classpath" resource="tasks.properties" loaderref="jetty.loader" />
+  <typedef name="connector" classname="org.eclipse.jetty.ant.types.Connector"
+	           classpathref="jetty.plugin.classpath" loaderref="jetty.loader" />
+  <typedef name="webApp" classname="org.eclipse.jetty.ant.AntWebAppContext"
+	          classpathref="jetty.plugin.classpath" loaderref="jetty.loader" />
+	
+  <target name="jetty.run" depends="jetty.webinf">
+    <jetty.run tempDirectory="${project.outputDirectory}" jettyXml="jetty-ant-config.xml">
+      <connectors>
+        <connector port="7070" />
+      	<connector port="7072" />
+      </connectors>
+
+      <systemProperties>
+        <systemproperty name="zimbra.config" value="${jetty_run_base}/conf/localconfig.xml" />
+        <systemproperty name="java.library.path" value="${jetty_run_base}/lib" />
+      </systemProperties>
+
+      <webApp war="${jetty_webapps}/service" contextpath="/service">
+      	<lib dir="${jetty_run_base}/jetty/common/lib" includes="*.jar" excludes="not-needed.jar,zimbracommon.jar,javamail-1.4.5.jar" />
+        <lib dir="${jetty_run_base}/lib" includes="*.jar" excludes="not-needed.jar,*javax.mail*" />
+        <lib dir="${jetty_run_base}/lib/jars" includes="*.jar" excludes="not-needed.jar" />
+        <classes dir="../ZimbraCommon/build/classes" />
+        <classes dir="../ZimbraSoap/build/classes" />
+        <classes dir="../ZimbraServer/build/classes" />
+        <classes dir="../ZimbraClient/build/classes" />
+        <attributes>
+          <attribute name="org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern" value=".*/.*jsp-api-[^/]*\.jar$|.*/.*jsp-[^/]*\.jar$|.*/.*taglibs[^/]*\.jar$"/>
+        </attributes>
+	  </webApp>
+
+      <webApp war="${jetty_run_base}/jetty/webapps/zimbra" contextpath="/">
+        <lib dir="${jetty_run_base}/jetty/common/lib" includes="*.jar" excludes="not-needed.jar" /> 
+        <lib dir="${jetty_run_base}/lib" includes="*.jar" excludes="not-needed.jar" />
+        <lib dir="${jetty_run_base}/lib/jars" includes="*.jar" excludes="not-needed.jar" />
+      	<lib dir="${jetty_run_base}/jetty/lib/jsp" includes="*.jar" excludes="not-needed.jar"/> 
+       	<attributes>
+          <attribute name="org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern" value=".*/.*jsp-api-[^/]*\.jar$|.*/.*jsp-[^/]*\.jar$|.*/.*taglibs[^/]*\.jar$"/>
+        </attributes>
+      </webApp>
+      <webApp war="${jetty_run_base}/jetty/webapps/zimbraAdmin" contextpath="/zimbraAdmin">
+        <lib dir="${jetty_run_base}/jetty/common/lib" includes="*.jar" excludes="not-needed.jar" />
+        <lib dir="${jetty_run_base}/lib" includes="*.jar" excludes="not-needed.jar" />
+        <lib dir="${jetty_run_base}/lib/jars" includes="*.jar" excludes="not-needed.jar" />
+        <lib dir="${jetty_run_base}/jetty/lib/jsp" includes="*.jar" excludes="not-needed.jar"/> 
+        <attributes>
+          <attribute name="org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern" value=".*/.*jsp-api-[^/]*\.jar$|.*/.*jsp-[^/]*\.jar$|.*/.*taglibs[^/]*\.jar$"/>
+        </attributes>
+   	
+      </webApp>
+
+    </jetty.run>
+  </target>
+
+</project>

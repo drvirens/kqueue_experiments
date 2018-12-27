@@ -1,0 +1,267 @@
+command - event - domain model
+
+e.g.
+
+PetSitter  [domain model]
+Register   [command]
+Registered [event]
+
+zc_pet_sitter_t model;
+zc_register_t cmd;
+zc_registered_t evt = model.apply(&cmd);
+zc_list *events = model.apply(&cmd);
+for (int i = 0; i < events->length(); i++) {
+    zc_evt_t *e = events->pop();
+    zc_equeue__post(e);
+}
+
+
+==================================
+
+events:
+
+zc_evt_cycle_started
+zc_evt_loop_completed
+
+
+
+use case: init cycle
+use case: config cycle
+use case: execute cycle
+
+
+
+- config file not found
+    - default config created
+- loaded config file
+- read config file
+- parsed config file (this will create some data structure e.g. rgb tree)
+- cycle started -> triggers looping ====== zc_evt_cycle_started
+- 
+- zc_evt_loop_completed
+
+
+===================================
+
+
+
+events :
+===========
+
+what are the events happening in the system?
+
+who is triggering those events?
+
+how are events changing the state of the system?
+
+
+models aka business objects (:
+
+- system resource - e.g process, memory, cpu. this is finite resource and hence must be manged carefully
+- process
+- memory
+- cpu
+- connection
+- 
+- worker
+- supervisor
+- cycle
+- instance
+- 
+
+commands:
+------------
+- start server
+- stop server
+- reconfigure server
+- 
+
+
+examples of events:
+
+- cycle started
+- cycle shutdown started
+- cycle health check tick occured
+- checked - health checkup for for entire zircon system was finished
+- security threat detected 
+- low memory detected
+- unusual cpu activity detected for (master/worker/other zircon) processes
+- high file i/o activity detected for (master/worker/other zircon) processes 
+
+//connection / socket descriptor
+- connected
+- disconnected - sd closed
+- accepted - returns new fd / socket descriptor
+- channel created - read or write channel created for a connection
+- read(past tense) - did read bytes on a connection channel
+- wrote - did write bytes on a connection channel
+
+- read-activity detected on socket descriptor (reable on kevent)
+- fully_read_fd - fully read file descriptor i.e. all bytes received
+- 
+
+//process related
+- spawned - process spawned
+- forked - process forked
+- killed - process killed
+- terminated 
+
+//environment
+- lowmem_detected
+- approaching_fd_sys_limit_detected
+- high_cpu_activity_detected
+
+
+
+// -----
+
+streaming interface for read???
+
+e.g.
+
+Anne wants to send Bob a message M of size N
+
+
+M = "Hello, Bob!" [12]
+Anne                               Bob
+
+- 6 bytes sent
+                              kq -> readable
+                                        read 3 bytes
+                                               copy 3 bytes to sink
+                                                        sink will start parsing 3 bytes
+
+zc_evt_connected_t:
+                - occurs when an accept(3) call returns an fd
+                - zircon-system reacts by creating a connection object and emitting 'connected' event
+
+            zc_evt_connected_t
+                sock_addr
+                sock_addr_len
+
+                canon_name
+                epoch_time
+                version
+
+
+zc_evt_read_t: 
+                - read event 
+                - fired whenever their is 'read' activity detected on an accepted socket descriptor
+                
+                zc_evt_read_t
+                    data
+                    data_len
+
+                    canon_name
+                    epoch_time
+                    version
+
+
+zc_stream
+
+
+
+zc_event_notif_t
+zc_kqueue_event_notif_t
+zc_epoll_event_notif_t
+
+channel ??
+
+
+
+
+kqueue   zc_evtnotif_t  zc_kq_t  zc_io_listened_t zc_evtqueue_t 
+
+ -- got... -->
+               - got... -->
+                           -- create --->
+                          <--------------
+                           ------enqueue--------------->
+
+
+
+
+
+zc_loop_t
+
+use case: loop once
+
+
+         zc_loop_t  zc_evtqueue_t    zc_evt_t
+
+-- loop --->
+             ----dequeue--->
+                             -----next--->
+                             <-----------
+                             -- handle ->
+                             <-----------
+             <--------------
+<-----------
+
+If event is zc_io_listened_t above then:
+
+
+         zc_loop_t  zc_evtqueue_t    zc_evt_t   zc_listener_t  zc_sock_t  zc_conn_t    zc_channel_t  zc_level_t   zc_list_t
+
+-- loop --->
+             ----dequeue--->
+                             -----next---//------->
+                             <-----------//--------
+                             ---------- handle ---->
+                                                     --- accept --->
+                                                                     --create-->
+                                                                        &sock_addr, &sock_len
+                                                                                 -----create-->
+                                                                                 <-------------
+                                                                                 -- open ------>
+                                                                                 < -------------
+                                                         ret conn_t  <----------
+                                                     <--------------
+                                                     -----------relinquish_ownership(conn_t)--------------->
+                                                                                                             -- add --->
+                                                                                                             <----------
+                                                     <-----------------------------------------------------
+                             <----------------------
+             <--------------
+<-----------
+
+
+
+zc_listener_t
+
+- handle()
+
+
+
+
+
+             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0014)about:internet -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <meta name="generator" content="Adobe RoboHelp 9" />
+<title>Provisioning Multiple Accounts</title>
+<link rel="StyleSheet" href="../default.css" type="text/css" />
+<script type="text/javascript" language="JavaScript">
+//<![CDATA[
+function reDo() {
+  if (innerWidth != origWidth || innerHeight != origHeight)
+     location.reload();
+}
+if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+	origWidth = innerWidth;
+	origHeight = innerHeight;
+	onresize = reDo;
+}
+onerror = null; 
+//]]>
+</script>
+<style type="text/css">
+<!--
+div.WebHelpPopupMenu { position:absolute;
+left:0px;
+top:0px;
+z-index:4;
+visibility:hidden; }
+-->
+</style>
+<script type="text/javascript" language="javascript1.2" src="../whmsg.js"></script>
+<script type="text/javascript" language="javascript" src="../whver.js"></script>
+<script type="text/javascript" language="javascript1.2" src="../whproxy.js"></script>
+<script type="text/javascript" language="javascript1.2" src="../whutils.js"></script>
+<script type="text/javascript" language="javascript1.2" src="../whlang.js"></script>
+<script type="text/javascript" language="javascript1.2" src="../whtopic.js"></script>
+
+</head>
+
+<body><script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.gbWhTopic)
+{
+	var strUrl = document.location.href;
+	var bc = 0;
+	var n = strUrl.toLowerCase().indexOf("bc-");
+	if(n != -1)
+	{
+		document.location.href = strUrl.substring(0, n);
+		bc = strUrl.substring(n+3);
+	}
+
+	if (window.addTocInfo)
+	{
+	addButton("show",BTN_TEXT,"Show TOC","","","","",0,0,"","","");
+
+	}
+	if (window.writeBtnStyle)
+		writeBtnStyle();
+
+	if (window.writeIntopicBar)
+		writeIntopicBar(1);
+
+	
+	
+
+	if (window.setRelStartPage)
+	{
+	setRelStartPage("../administration_console_help.htm");
+
+		autoSync(1);
+		sendSyncInfo();
+		sendAveInfoOut();
+	}
+}
+else
+	if (window.gbIE4)
+		document.location.reload();
+
+//-->
+//]]></script>
+
+<h1>Provisioning Multiple Accounts and Migrating Account Data</h1>
+<p style="margin-left: 0px;">You can provision multiple accounts at one 
+ time using the Account Migration Wizard from the administration console. 
+ You can import accounts from either a generic IMAP server or from another 
+ ZCS server.</p>
+<ul>
+	<li class="P-note"><p class="note">Only accounts on ZCS 7.2 or later 
+	 can be migrated to ZCS 8.0.</p></li>
+</ul>
+<p style="margin-left: 0px;">You can also import account names to provision 
+ from an XML file that you create. See the ZCS Administrator's Guide, Provisioning 
+ User Accounts chapter for example of XML files that can be created.</p>
+<ul>
+	<li class="P-note"><p class="note">To migrate from other types of server, 
+	 see the ZCS Migration Guides for Exchange and for Lotus Domino servers.</p></li>
+</ul>
+<p style="margin-left: 0px;">You can run the migration wizard one time 
+ to provision accounts and import data or you can run the migration wizard 
+ the first time to provision the accounts and then run the wizard again 
+ to import the provisioned accounts’ data. </p>
+<p style="margin-left: 0px;">Whether you get the account records from an 
+ LDAP directory or use an XML file, you need to set the password requirements 
+ for the newly provisioned accounts. The options are to have ZCS randomly 
+ create passwords for each account or to set the same password on each 
+ account. You have the option to force users to change the password when 
+ they sign in the first time. </p>
+<p style="margin-left: 0px;">When the provisioning is complete, the wizard 
+ generates a .csv file with a list of new accounts. This includes the passwords 
+ that are generated. You should download this file for future reference. 
+ Choose a secure location to store the file as it can contain password 
+ information for the user accounts you provisioned.</p>
+<p style="margin-left: 0px;">If you running a split domain configuration, 
+ you can set the SMTP host and port in the wizard. For more information 
+ about split domains, see the wiki article about split domains at http://wiki.zimbra.com/wiki/Split_Domain. 
+ </p>
+<p style="margin-left: 40px;">&#160;</p>
+<p style="margin-left: 40px;">&#160;</p>
+<script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.writeIntopicBar)
+	writeIntopicBar(0);
+
+
+highlightSearch();
+//-->
+//]]></script>
+</body>
+</html>

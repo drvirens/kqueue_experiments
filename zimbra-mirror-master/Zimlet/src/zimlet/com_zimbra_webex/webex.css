@@ -1,0 +1,71 @@
+.ImgWEBEX-panelIcon {
+	background:url("webex.gif") no-repeat 0 0;
+	width:16px;
+	height:16px;
+	overflow:hidden;
+}
+
+.webExZimlet_background,
+.webExZimlet_subHdr,
+.webExZimlet_hdr,
+.webExZimlet_acctHdr {
+	border-bottom:1px solid #999;
+}
+.webExZimlet_background {
+	background:#FDFDFD;
+	padding:1em;
+}
+.webExZimlet_acctHdr,
+.webExZimlet_hdr,
+.webExZimlet_subHdr {
+	font-weight:bold;
+	padding:4px;
+}
+.webExZimlet_acctHdr,
+.webExZimlet_hdr {
+	background:#808080;
+	color:white;
+}
+.webExZimlet_acctHdr {
+	font-size:14px;
+}
+
+TABLE.webExZimlet_table INPUT,
+TABLE.webExZimlet_table TEXTAREA,
+TABLE.webExZimlet_table SELECT {
+	border:1px solid #3A73AB;
+}
+TABLE.webExZimlet_table INPUT,
+TABLE.webExZimlet_table TEXTAREA {
+	width:230px;
+	padding:2px 4px;
+}
+TABLE.webExZimlet_table INPUT {
+	height:20px;
+}
+
+.webex_hoverTable TR:hover {
+	background-color:#CCD5E8;
+}
+.webex_hoverTable TD {
+	border-bottom:1px solid #BBB;
+	height:27px;
+	padding:0.5em;
+	vertical-align:middle;
+}
+.webex_hoverTable TH {
+	border-bottom:1px solid #333;
+	height:30px;
+	padding:0.5em;
+	vertical-align:middle;
+}
+.webex_hoverTable A {
+	text-decoration:underline;
+}
+
+#webExZimlet_accountTabView_tabbar {
+	overflow:hidden;
+}
+#webExZimlet_accountTabView .ZTabBar {
+	background-color:none !important;
+}
